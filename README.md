@@ -1,36 +1,176 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weather App - Next.js
+
+A beautiful, modern weather application built with Next.js 15, featuring real-time weather data, 5-day forecasts, and a stunning glassmorphic UI.
+
+## Features
+
+- 🌤️ Real-time weather data from OpenWeatherMap API
+- 📅 5-day weather forecast
+- 🌍 Geolocation detection
+- 🌡️ Temperature unit toggle (°C/°F)
+- 💎 Glassmorphism UI design
+- 📱 Fully responsive
+- ⚡ Built with Next.js 15 & TypeScript
+- 🎨 Styled with Tailwind CSS
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+ installed
+- OpenWeatherMap API key (free tier available)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   cd weather-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   
+   Create a `.env.local` file in the root directory:
+   ```env
+   NEXT_PUBLIC_WEATHER_API_KEY=your_openweathermap_api_key_here
+   NEXT_PUBLIC_WEATHER_API_URL=https://api.openweathermap.org/data/2.5
+   ```
+
+   **Get your API key:**
+   - Sign up at [OpenWeatherMap](https://openweathermap.org/api)
+   - Go to API Keys section
+   - Copy your API key
+   - Paste it in the `.env.local` file
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Project Structure
+
+```
+weather-app/
+├── app/
+│   ├── page.tsx           # Main page with weather display
+│   ├── layout.tsx         # Root layout
+│   └── globals.css        # Global styles & animations
+├── components/
+│   ├── WeatherSidebar.tsx # Current weather sidebar
+│   ├── WeeklyForecast.tsx # 5-day forecast cards
+│   ├── SearchInput.tsx    # City search input
+│   ├── UnitToggle.tsx     # Temperature unit toggle
+│   ├── GlassSkeleton.tsx  # Loading skeleton
+│   └── GlassError.tsx     # Error display
+├── hooks/
+│   ├── useWeather.ts      # Weather data management
+│   └── useGeolocation.ts  # Browser geolocation
+├── lib/
+│   ├── weather-api.ts     # API service layer
+│   ├── weather-helpers.ts # Helper functions
+│   ├── temperature-converter.ts # Temperature utils
+│   └── utils.ts           # General utilities
+├── types/
+│   └── weather.ts         # TypeScript interfaces
+└── .env.local            # Environment variables (create this)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+##Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Search for a City
+- Type a city name in the search bar
+- Press Enter or click the search icon
+- Weather data will load automatically
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Detect Your Location
+- Click the "Detect Location" button
+- Allow location access when prompted
+- Weather for your location will display
 
-## Learn More
+### Toggle Temperature Unit
+- Click the °C/°F toggle in the sidebar
+- All temperatures will convert instantly
 
-To learn more about Next.js, take a look at the following resources:
+## API Information
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This app uses the OpenWeatherMap API:
+- **Current Weather**: `/weather` endpoint
+- **5-Day Forecast**: `/forecast` endpoint
+- **Free Tier**: 1,000 calls/day, 60 calls/minute
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Technologies Used
 
-## Deploy on Vercel
+- [Next.js 15](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Lucide React](https://lucide.dev/) - Icons
+- [OpenWeatherMap API](https://openweathermap.org/api) - Weather data
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Features in Detail
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Real-Time Weather
+- Current temperature
+- Weather conditions
+- Humidity percentage
+- Wind speed
+- "Feels like" temperature
+
+### 5-Day Forecast
+- Daily high/low temperatures
+- Weather conditions
+- Wind speed
+- Air quality estimation
+- Animated weather icons
+
+### Error Handling
+- Invalid city name detection
+- Network error recovery
+- API failure messages
+- Empty input validation
+
+### Loading States
+- Animated skeletons while loading
+- Smooth transitions
+- Loading indicators
+
+## Development
+
+```bash
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+
+# Run linter
+npm run lint
+```
+
+## Environment Variables
+
+Required environment variables in `.env.local`:
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_WEATHER_API_KEY` | Your OpenWeatherMap API key | Yes |
+| `NEXT_PUBLIC_WEATHER_API_URL` | OpenWeatherMap API base URL | Yes |
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Acknowledgments
+
+- Weather data provided by [OpenWeatherMap](https://openweathermap.org/)
+- Icons by [Lucide](https://lucide.dev/)
+- Built with [Next.js](https://nextjs.org/)

@@ -24,7 +24,7 @@ A beautiful, modern weather application built with Next.js 15, featuring real-ti
 
 1. **Clone the repository**
    ```bash
-   cd weather-app
+   git clone <your-repo-url>
    ```
 
 2. **Install dependencies**
@@ -36,8 +36,9 @@ A beautiful, modern weather application built with Next.js 15, featuring real-ti
    
    Create a `.env.local` file in the root directory:
    ```env
-   NEXT_PUBLIC_WEATHER_API_KEY=your_openweathermap_api_key_here
+   WEATHER_API_KEY=your_openweathermap_api_key_here
    NEXT_PUBLIC_WEATHER_API_URL=https://api.openweathermap.org/data/2.5
+   NEXT_PUBLIC_GEO_API_URL=https://api.openweathermap.org/geo/1.0
    ```
 
    **Get your API key:**
@@ -59,6 +60,7 @@ A beautiful, modern weather application built with Next.js 15, featuring real-ti
 ```
 weather-app/
 ├── app/
+│   ├── api/               # Server-side proxy routes
 │   ├── page.tsx           # Main page with weather display
 │   ├── layout.tsx         # Root layout
 │   └── globals.css        # Global styles & animations
@@ -66,19 +68,18 @@ weather-app/
 │   ├── WeatherSidebar.tsx # Current weather sidebar
 │   ├── WeeklyForecast.tsx # 5-day forecast cards
 │   ├── SearchInput.tsx    # City search input
-│   ├── UnitToggle.tsx     # Temperature unit toggle
-│   ├── GlassSkeleton.tsx  # Loading skeleton
-│   └── GlassError.tsx     # Error display
+│   └── ...                # Other glassmorphic components
 ├── hooks/
 │   ├── useWeather.ts      # Weather data management
 │   └── useGeolocation.ts  # Browser geolocation
 ├── lib/
+│   ├── proxy-fetch.ts     # Centralized API proxy logic
 │   ├── weather-api.ts     # API service layer
 │   ├── weather-helpers.ts # Helper functions
-│   ├── temperature-converter.ts # Temperature utils
-│   └── utils.ts           # General utilities
+│   └── ...                # Other utilities
 ├── types/
 │   └── weather.ts         # TypeScript interfaces
+├── proxy.ts               # Global security & logging middleware
 └── .env.local            # Environment variables (create this)
 ```
 
@@ -162,8 +163,9 @@ Required environment variables in `.env.local`:
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `NEXT_PUBLIC_WEATHER_API_KEY` | Your OpenWeatherMap API key | Yes |
-| `NEXT_PUBLIC_WEATHER_API_URL` | OpenWeatherMap API base URL | Yes |
+| `WEATHER_API_KEY` | Your OpenWeatherMap API key (Server-only) | Yes |
+| `NEXT_PUBLIC_WEATHER_API_URL` | OpenWeatherMap Data API base URL | Yes |
+| `NEXT_PUBLIC_GEO_API_URL` | OpenWeatherMap Geocoding API base URL | Yes |
 
 ## License
 

@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     }
 
     const result = await proxyFetch('/direct', { q, limit: '5' }, {
-        baseUrl: 'https://api.openweathermap.org/geo/1.0'
+        baseUrl: process.env.NEXT_PUBLIC_GEO_API_URL || 'https://api.openweathermap.org/geo/1.0'
     });
 
     if (result.error) {

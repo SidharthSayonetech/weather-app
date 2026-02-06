@@ -80,6 +80,16 @@ export function useWeather(initialWeather?: WeatherData, initialForecast?: Forec
         }
     }, [lastSearch, searchWeather, searchWeatherByCoords]);
 
+    const reset = useCallback(() => {
+        setWeatherData(initialWeather || null);
+        setForecastData(initialForecast || []);
+        setError(initialError || null);
+        setStatus(initialError ? 'error' : (initialWeather ? 'success' : 'loading'));
+        if (initialWeather) {
+            setLastSearch({ type: 'city', city: initialWeather.city });
+        }
+    }, [initialWeather, initialForecast, initialError]);
+
     const getDisplayTemp = useCallback((celsius: number) => {
         return unit === 'C' ? celsius : Math.round(convertTemperature(celsius, 'F', 'C'));
     }, [unit]);
@@ -104,6 +114,7 @@ export function useWeather(initialWeather?: WeatherData, initialForecast?: Forec
         searchWeather,
         searchWeatherByCoords,
         toggleUnit,
-        retry
+        retry,
+        reset
     };
 }

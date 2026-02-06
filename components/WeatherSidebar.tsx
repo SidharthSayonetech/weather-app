@@ -65,7 +65,7 @@ export const WeatherSidebar: React.FC<WeatherSidebarProps> = ({
                         <span className="text-4xl md:text-5xl font-light text-slate-400">°</span>
                     </div>
 
-                    <div className="mt-3 md:ml-1 scale-90 origin-left">
+                    <div className="mt-4 md:ml-1">
                         <UnitToggle unit={unit} onToggle={onToggleUnit} />
                     </div>
                 </div>

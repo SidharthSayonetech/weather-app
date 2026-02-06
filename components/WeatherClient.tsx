@@ -27,7 +27,8 @@ export default function WeatherClient({ initialWeather, initialForecast, initial
         searchWeather,
         searchWeatherByCoords,
         toggleUnit,
-        retry
+        retry,
+        reset
     } = useWeather(initialWeather || undefined, initialForecast, initialError || undefined);
 
     const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(0);
@@ -65,11 +66,17 @@ export default function WeatherClient({ initialWeather, initialForecast, initial
                     {(status === 'loading' || geoLoading) ? (
                         <GlassSkeleton />
                     ) : status === 'error' ? (
-                        <div className="w-full flex justify-center animate-in fade-in zoom-in duration-500">
+                        <div className="flex flex-col items-center gap-6 animate-in fade-in zoom-in duration-500">
                             <GlassError
                                 message={error?.message || 'Failed to fetch weather data'}
                                 onRetry={retry}
                             />
+                            <button
+                                onClick={reset}
+                                className="text-slate-500 hover:text-blue-600 font-medium text-sm transition-colors flex items-center gap-2 px-6 py-2 bg-white/40 backdrop-blur-md rounded-full border border-white/60 shadow-sm hover:shadow-md active:scale-95"
+                            >
+                                ← Back to Dashboard
+                            </button>
                         </div>
                     ) : (
                         <div className="w-full flex flex-col md:flex-row animate-in fade-in zoom-in duration-500">

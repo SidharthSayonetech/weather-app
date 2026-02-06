@@ -74,9 +74,12 @@ export const SearchInput: React.FC<SearchInputProps> = ({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    const canSubmit = inputValue.length < 2 || suggestions.length > 0 || isSearching;
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!inputValue.trim()) {
+
+        if (!inputValue.trim() || !canSubmit) {
             setLocalError(true);
             return;
         }
@@ -101,19 +104,31 @@ export const SearchInput: React.FC<SearchInputProps> = ({
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (!showSuggestions) return;
+        if (!showSuggestions) {
+            if (e.key === 'Enter' && !canSubmit) {
+                e.preventDefault();
+                setLocalError(true);
+            }
+            return;
+        }
 
         if (e.key === 'ArrowDown') {
             e.preventDefault();
             setSelectedIndex(prev => (prev < suggestions.length - 1 ? prev + 1 : prev));
         } else if (e.key === 'ArrowUp') {
             e.preventDefault();
-            setSelectedIndex(prev => (prev > 0 ? prev - 1 : -1)); 
+            setSelectedIndex(prev => (prev > 0 ? prev - 1 : -1));
         } else if (e.key === 'Escape') {
             setShowSuggestions(false);
-        } else if (e.key === 'Enter' && selectedIndex >= 0) {
+        } else if (e.key === 'Enter') {
             e.preventDefault();
-            handleSelect(suggestions[selectedIndex]);
+            if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+                handleSelect(suggestions[selectedIndex]);
+            } else if (!canSubmit) {
+                setLocalError(true);
+            } else {
+                handleSubmit(e as any);
+            }
         }
     };
 
@@ -146,8 +161,8 @@ export const SearchInput: React.FC<SearchInputProps> = ({
                         {isSearching && <Loader2 className="w-4 h-4 text-blue-500 animate-spin mr-1" />}
                         <button
                             type="submit"
-                            disabled={isLoading}
-                            className={` ${compact ? 'p-1.5' : 'p-2.5'} bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition-colors disabled:opacity-70 shadow-lg hover:shadow-blue-500/30`}
+                            disabled={isLoading || !canSubmit}
+                            className={` ${compact ? 'p-1.5' : 'p-2.5'} bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition-colors disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed shadow-lg hover:shadow-blue-500/30`}
                         >
                             {isLoading ? (
                                 <Loader2 className={`${compact ? 'w-3 h-3' : 'w-5 h-5'} animate-spin`} />

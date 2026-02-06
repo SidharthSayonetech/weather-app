@@ -5,7 +5,7 @@ import { CloudOff, RefreshCw } from 'lucide-react';
 
 interface GlassErrorProps {
     message: string;
-    onRetry: () => void;
+    onRetry?: () => void;
 }
 
 export const GlassError: React.FC<GlassErrorProps> = ({ message, onRetry }) => {
@@ -19,13 +19,15 @@ export const GlassError: React.FC<GlassErrorProps> = ({ message, onRetry }) => {
                 <h3 className="text-2xl font-bold text-slate-800 mb-2">Oops!</h3>
                 <p className="text-slate-600 mb-8">{message}</p>
 
-                <button
-                    onClick={onRetry}
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#6B8EFF] to-[#4F46E5] hover:from-[#5A7DE0] hover:to-[#4338CA] text-white rounded-2xl transition-all font-semibold shadow-lg shadow-blue-500/30 hover:scale-105 active:scale-95"
-                >
-                    <RefreshCw size={18} />
-                    Try Again
-                </button>
+                {onRetry && (
+                    <button
+                        onClick={onRetry}
+                        className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#6B8EFF] to-[#4F46E5] hover:from-[#5A7DE0] hover:to-[#4338CA] text-white rounded-2xl transition-all font-semibold shadow-lg shadow-blue-500/30 hover:scale-105 active:scale-95"
+                    >
+                        <RefreshCw size={18} />
+                        Try Again
+                    </button>
+                )}
             </div>
         </div>
     );
